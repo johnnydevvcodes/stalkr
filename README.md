@@ -1,6 +1,6 @@
 # stalkr
 
-A new Flutter project.
+An app which let others know your current activity
 
 ## Getting Started
 
