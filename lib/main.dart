@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:stalkr/storage/prefs.dart';
 
 import 'main_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Prefs.initPrefs();
   runApp(const Main());
 }
 

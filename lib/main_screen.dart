@@ -1,13 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stalkr/screens/details_screen.dart';
+import 'package:stalkr/storage/prefs.dart';
 
 import 'models/user_details.dart';
 
@@ -26,6 +24,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
+  var prefInstance = Prefs.instance;
   final _nameCtrl = TextEditingController();
   final _statusCtrl = TextEditingController();
   final _phoneNumberCtrl = TextEditingController(text: '63');
@@ -56,9 +55,14 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    // Obtain shared preferences.
+
     //_initDownload();
+
     _birthDateCtrl.text =
         "${_birthdatePicker.month}/${_birthdatePicker.day}/${_birthdatePicker.year}";
+
+    _initValues();
   }
 
   @override
@@ -161,8 +165,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _save();
+        onPressed: () {
+          _save();
         },
         child: Icon(Icons.save),
       ),
@@ -212,6 +216,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           _statusCtrl.text,
           int.parse(_phoneNumberCtrl.text),
           _birthDateCtrl.text);
+      
+      await prefInstance.setString('_name', _nameCtrl.text);
+      await prefInstance.setString('_status', _statusCtrl.text);
+      await prefInstance.setString('_imageLocalPath', _imageLocalPath ?? '');
+      await prefInstance.setString('_phoneNumber', _phoneNumberCtrl.text);
+      await prefInstance.setString('_birthDate', _birthDateCtrl.text);
 
       Navigator.push(
         context,
@@ -251,5 +261,20 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       // log(value)
       return;
     });
+  }
+
+  void _initValues() {
+    _nameCtrl.text = prefInstance.getString('_name') ?? '';
+
+    _statusCtrl.text = prefInstance.getString('_status') ?? '';
+
+    _imageLocalPath = prefInstance.getString('_imageLocalPath') ?? '';
+
+    _phoneNumberCtrl.text = prefInstance.getString('_phoneNumber') ?? '63';
+
+    _birthDateCtrl.text =
+        prefInstance.getString('_birthDate') ?? DateTime.now().toString();
+
+    setState(() {});
   }
 }
