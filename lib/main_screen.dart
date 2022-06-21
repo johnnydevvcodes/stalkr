@@ -128,8 +128,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               },
             ),
             TextFormField(
+                textInputAction: TextInputAction.done,
                 controller: _birthDateCtrl,
                 decoration: InputDecoration(labelText: "Birthdate"),
+                onFieldSubmitted: (String fieldValue) {
+                  _save();
+                },
                 onTap: () async {
                   DateTime? newDate = await showDatePicker(
                       context: context,
@@ -201,6 +205,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           "https://avatars.dicebear.com/api/adventurer/${_nameCtrl.text}.svg";
 
       await downloadAvatar(url);
+
       UserDetails userDetails = UserDetails(
           _imageLocalPath!,
           _nameCtrl.text,
@@ -240,10 +245,11 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     await appDocumentDir.create(recursive: true);
     String appDocPath = appDocumentDir.path;
     String localPath = "$appDocPath/leni-pink.svg";
-    await dio.download(url, localPath).then((value) {
+    return await dio.download(url, localPath).then((value) {
       print(value);
       _imageLocalPath = localPath;
       // log(value)
+      return;
     });
   }
 }
