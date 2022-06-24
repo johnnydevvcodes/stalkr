@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stalkr/screens/details_screen.dart';
-import 'package:stalkr/storage/prefs.dart';
 
-import 'models/user_details.dart';
+// import 'package:stalkr/storage/prefs.dart';
+// import 'storage/user_details.dart';
+import 'package:stalkr/storage/xport_storage.dart';
+
+import 'application/app_stream.dart';
+import 'models/account.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatefulWidget {
@@ -30,11 +34,16 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final _phoneNumberCtrl = TextEditingController(text: '63');
   final _birthDateCtrl = TextEditingController();
   late DateTime _birthdatePicker = DateTime.now();
-
+  var _appStream = AppStream();
   String? _imageLocalPath;
   String? get _statusOutput => _nameCtrl.text.isNotEmpty
       ? "${_nameCtrl.text}, ${_statusCtrl.text}"
       : null;
+  @override
+  void dispose() {
+    _appStream.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -161,6 +170,62 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     : _statusOutput!),
               ),
             ), */
+            ValueListenableBuilder<Account>(
+              valueListenable: ValueNotifier(Account()),
+              builder: (BuildContext context, Account value, Widget? child) {
+                return Container();
+              },
+            ),
+            FutureBuilder<Account>(
+              initialData: Account(),
+              future: _appStream.getAccountFuture(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                switch(snapshot.connectionState){
+
+                  case ConnectionState.none:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.waiting:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.active:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.done:
+                    // TODO: Handle this case.
+                    break;
+                }
+                return Container();
+              },
+            ),
+            Expanded(
+              child: StreamBuilder<Account>(
+                  initialData: Account(),
+                  stream: _appStream.valOutput,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null &&
+                        snapshot.connectionState != ConnectionState.done) {
+                      return Center(child: Text("Add Account Now"));
+                    } else {
+                      var account = snapshot.data ?? Account();
+                      return Center(child: Text(account.toJson().toString()));
+                    }
+                  }),
+            ),
+            Expanded(
+              child: StreamBuilder<Account>(
+                  initialData: Account(),
+                  stream: _appStream.valOutput,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null &&
+                        snapshot.connectionState != ConnectionState.done) {
+                      return Center(child: Text("Add Account Now"));
+                    } else {
+                      var account = snapshot.data ?? Account();
+                      return Center(child: Text(account.toJson().toString()));
+                    }
+                  }),
+            ),
           ],
         ),
       ),
@@ -200,8 +265,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _save() async {
-    if (_statusCtrl.text.length < 0 ||
-        _nameCtrl.text.length < 0 ||
+    if (_statusCtrl.text.isEmpty ||
+        _nameCtrl.text.isEmpty ||
         _phoneNumberCtrl.text.length < 12) {
       showDialog(context: context, builder: showAlertDialog(context));
     } else {
@@ -216,12 +281,20 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           _statusCtrl.text,
           int.parse(_phoneNumberCtrl.text),
           _birthDateCtrl.text);
-      
-      await prefInstance.setString('_name', _nameCtrl.text);
-      await prefInstance.setString('_status', _statusCtrl.text);
-      await prefInstance.setString('_imageLocalPath', _imageLocalPath ?? '');
-      await prefInstance.setString('_phoneNumber', _phoneNumberCtrl.text);
-      await prefInstance.setString('_birthDate', _birthDateCtrl.text);
+
+      // await prefInstance.setString('_name', _nameCtrl.text);
+      // await prefInstance.setString('_status', _statusCtrl.text);
+      // await prefInstance.setString('_imageLocalPath', _imageLocalPath ?? '');
+      // await prefInstance.setString('_phoneNumber', _phoneNumberCtrl.text);
+      // await prefInstance.setString('_birthDate', _birthDateCtrl.text);
+
+      _appStream.valInput.add(Account(
+        name: _nameCtrl.text,
+        imageUrl: _imageLocalPath ?? '',
+        status: _imageLocalPath ?? '',
+        number: int.parse(_phoneNumberCtrl.text),
+        birthDate: _birthDateCtrl.text,
+      ));
 
       Navigator.push(
         context,

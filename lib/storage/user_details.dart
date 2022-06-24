@@ -7,4 +7,5 @@ class UserDetails {
 
   const UserDetails(
       this.imageUrl, this.name, this.status, this.number, this.birthDate);
+
 }

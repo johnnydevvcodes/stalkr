@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../models/user_details.dart';
+import '../storage/user_details.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key, required this.userDetails});
