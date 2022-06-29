@@ -23,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+             Container(
               width: 100,
               height: 100,
               child: CircleAvatar(
@@ -33,7 +33,7 @@ class DetailsScreen extends StatelessWidget {
                     // ? Image(_imageLocalPath!)
                     : Container(),
               ),
-            ),
+            ), 
             TextFormField(
               enabled: false,
               decoration: InputDecoration(labelText:"Name"),

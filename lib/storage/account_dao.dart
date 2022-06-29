@@ -4,7 +4,6 @@ import 'package:sembast/sembast.dart';
 import 'package:stalkr/models/account.dart';
 import 'package:stalkr/storage/app_db.dart';
 
-
 class AccountDao {
   final _accountDbStore = StoreRef.main();
   final _accountKey = 'accountKey';
@@ -32,6 +31,12 @@ class AccountDao {
     return val != null ? Account.fromJson(val) : Account();
   }
 
+  // ATTEMPT AT GETTING MULTIPLE ACCOUNTS BUT REALIZED THIS IS NOT SQL AND WE ARE ONLY RETRIEVING 1 
+  /* Future<List<Account>> getSavedAccounts() async {
+    var db = await _database;
+    var val = await _accountDbStore.records().get()
+  }
+ */
   Stream<Account> getAccountDbChanges() {
     var controller = StreamController<Account>();
     _database.then((db) {

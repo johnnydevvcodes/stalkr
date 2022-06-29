@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stalkr/screens/details_screen.dart';
+import 'package:stalkr/storage/account_dao.dart';
 
 // import 'package:stalkr/storage/prefs.dart';
 // import 'storage/user_details.dart';
@@ -72,6 +73,19 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         "${_birthdatePicker.month}/${_birthdatePicker.day}/${_birthdatePicker.year}";
 
     _initValues();
+
+    _appStream.initializeStream();
+
+    _appStream.valOutput.listen((event) {
+      _nameCtrl.text = event.name;
+      _statusCtrl.text = event.status ?? '';
+      _phoneNumberCtrl.text =
+          event.number.toString() == "null" ? "63" : event.number.toString();
+      _birthDateCtrl.text = event.birthDate ??
+          "${_birthdatePicker.month}/${_birthdatePicker.day}/${_birthdatePicker.year}";
+    });
+
+    //_appStream.listenToDb();
   }
 
   @override
@@ -180,8 +194,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               initialData: Account(),
               future: _appStream.getAccountFuture(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                switch(snapshot.connectionState){
-
+                switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     // TODO: Handle this case.
                     break;
@@ -273,7 +286,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       String url =
           "https://avatars.dicebear.com/api/adventurer/${_nameCtrl.text}.svg";
 
-      await downloadAvatar(url);
+      //await downloadAvatar(url);
 
       UserDetails userDetails = UserDetails(
           _imageLocalPath!,
@@ -291,10 +304,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       _appStream.valInput.add(Account(
         name: _nameCtrl.text,
         imageUrl: _imageLocalPath ?? '',
-        status: _imageLocalPath ?? '',
+        status: _statusCtrl.text,
         number: int.parse(_phoneNumberCtrl.text),
         birthDate: _birthDateCtrl.text,
       ));
+
+      _appStream.saveToDb();
 
       Navigator.push(
         context,
