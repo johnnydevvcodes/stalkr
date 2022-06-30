@@ -8,7 +8,7 @@ part 'account.g.dart';
 class Account with _$Account {
   factory Account({
     @Default('Unknown') String name,
-    @Default('No image') String imageUrl,
+    String? imageUrl,
     String? status,
     int? number,
     String? birthDate,

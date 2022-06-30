@@ -1,9 +1,0 @@
-//sembast
-
-
-//StoreRef.main()
-
---accountkey {name: "value", age: 'asdf'}
-
-storeRef: "someRef"
-value: {name: "value", age: 'asdf'}

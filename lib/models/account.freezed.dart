@@ -20,8 +20,8 @@ Account _$AccountFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Account {
-  String get imageUrl => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   int? get number => throw _privateConstructorUsedError;
   String? get birthDate => throw _privateConstructorUsedError;
@@ -36,8 +36,8 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res>;
   $Res call(
-      {String imageUrl,
-      String name,
+      {String name,
+      String? imageUrl,
       String? status,
       int? number,
       String? birthDate});
@@ -53,21 +53,21 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? imageUrl = freezed,
     Object? name = freezed,
+    Object? imageUrl = freezed,
     Object? status = freezed,
     Object? number = freezed,
     Object? birthDate = freezed,
   }) {
     return _then(_value.copyWith(
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -91,8 +91,8 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
       __$$_AccountCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String imageUrl,
-      String name,
+      {String name,
+      String? imageUrl,
       String? status,
       int? number,
       String? birthDate});
@@ -109,21 +109,21 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? imageUrl = freezed,
     Object? name = freezed,
+    Object? imageUrl = freezed,
     Object? status = freezed,
     Object? number = freezed,
     Object? birthDate = freezed,
   }) {
     return _then(_$_Account(
-      imageUrl: imageUrl == freezed
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -144,8 +144,8 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Account with DiagnosticableTreeMixin implements _Account {
   _$_Account(
-      {this.imageUrl = 'No image',
-      this.name = 'Unknown',
+      {this.name = 'Unknown',
+      this.imageUrl,
       this.status,
       this.number,
       this.birthDate});
@@ -155,10 +155,9 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
 
   @override
   @JsonKey()
-  final String imageUrl;
-  @override
-  @JsonKey()
   final String name;
+  @override
+  final String? imageUrl;
   @override
   final String? status;
   @override
@@ -168,7 +167,7 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Account(imageUrl: $imageUrl, name: $name, status: $status, number: $number, birthDate: $birthDate)';
+    return 'Account(name: $name, imageUrl: $imageUrl, status: $status, number: $number, birthDate: $birthDate)';
   }
 
   @override
@@ -176,8 +175,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Account'))
-      ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('number', number))
       ..add(DiagnosticsProperty('birthDate', birthDate));
@@ -188,8 +187,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Account &&
-            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.status, status) &&
             const DeepCollectionEquality().equals(other.number, number) &&
             const DeepCollectionEquality().equals(other.birthDate, birthDate));
@@ -199,8 +198,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(imageUrl),
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(imageUrl),
       const DeepCollectionEquality().hash(status),
       const DeepCollectionEquality().hash(number),
       const DeepCollectionEquality().hash(birthDate));
@@ -218,8 +217,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
 
 abstract class _Account implements Account {
   factory _Account(
-      {final String imageUrl,
-      final String name,
+      {final String name,
+      final String? imageUrl,
       final String? status,
       final int? number,
       final String? birthDate}) = _$_Account;
@@ -227,9 +226,9 @@ abstract class _Account implements Account {
   factory _Account.fromJson(Map<String, dynamic> json) = _$_Account.fromJson;
 
   @override
-  String get imageUrl => throw _privateConstructorUsedError;
-  @override
   String get name => throw _privateConstructorUsedError;
+  @override
+  String? get imageUrl => throw _privateConstructorUsedError;
   @override
   String? get status => throw _privateConstructorUsedError;
   @override

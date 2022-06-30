@@ -6,25 +6,25 @@ import 'package:stalkr/application/app_stream.dart';
 
 import '../models/account.dart';
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key});
+class DetailsScreen2 extends StatefulWidget {
+  const DetailsScreen2({super.key});
 
+  @override
+  State<DetailsScreen2> createState() => _DetailsScreen2State();
+}
+
+class _DetailsScreen2State extends State<DetailsScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Page'),
       ),
-      body: StreamBuilder<Account>(
-        stream: AppStream().valOutput,
-        builder: (context, snapshot) {
-          if (snapshot.data == null &&
-              snapshot.connectionState != ConnectionState.done) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            var account = snapshot.data ?? Account();
-            return _buildContent(account);
-          }
+      body: ValueListenableBuilder(
+        valueListenable: AppStream().accountNotifier,
+        builder: (context, Account? value, child) {
+          var account = value ?? Account();
+          return _buildContent(account);
         },
       ),
     );
