@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "925868412119",
+    "project_id": "stalkr-30576",
+    "storage_bucket": "stalkr-30576.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925868412119:android:4697d751544cbc82173492",
+        "android_client_info": {
+          "package_name": "com.moji.stalkr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925868412119-3s4ncs61vtjmfc3dpvgq4qk46njnusc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moji.stalkr",
+            "certificate_hash": "4715b13dea8294883cb8a5cf02b14c6ea19d8ed7"
+          }
+        },
+        {
+          "client_id": "925868412119-1spgmubm1i93abolj4ukbr9l63ron4ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_0Z813WsyoOvON-Sstrjv6-cn4qW2f_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925868412119-1spgmubm1i93abolj4ukbr9l63ron4ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

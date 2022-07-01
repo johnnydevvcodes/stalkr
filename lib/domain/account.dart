@@ -8,10 +8,10 @@ part 'account.g.dart';
 class Account with _$Account {
   factory Account({
     @Default('Unknown') String name,
-    String? imageUrl,
-    String? status,
-    int? number,
-    String? birthDate,
+    @Default('https://avatars.dicebear.com/api/adventurer/random.svg') String? imageUrl,
+    @Default('No stats') String? status,
+    @Default(63) int? number,
+    @Default('dd/mm/yyyy') String? birthDate,
   }) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) =>

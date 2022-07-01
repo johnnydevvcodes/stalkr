@@ -4,19 +4,24 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/account.dart';
-import '../storage/account_dao.dart';
+import '../domain/account.dart';
+import '../infra/account/account_dao.dart';
 
 class AppStream {
   var inputController = StreamController<Account>();
   var outputController = StreamController<Account>.broadcast();
   StreamSubscription<Account?>? inputSubscriber;
   var accountDao = AccountDao();
-
+  
   //value listenable
   ValueNotifier<Account?> accountNotifier = ValueNotifier(null);
-
+  
   AppStream() {
+
+    getAccountFuture().then((Account acct) {
+      valInput.add(acct);
+    });
+
     inputController.stream.listen((Account account) {
       outputController.sink.add(account);
     });

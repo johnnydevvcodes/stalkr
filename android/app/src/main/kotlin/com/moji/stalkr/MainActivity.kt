@@ -1,4 +1,4 @@
-package com.example.stalkr
+package com.moji.stalkr
 
 import io.flutter.embedding.android.FlutterActivity
 

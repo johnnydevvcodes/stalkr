@@ -8,10 +8,11 @@ part of 'account.dart';
 
 _$_Account _$$_AccountFromJson(Map<String, dynamic> json) => _$_Account(
       name: json['name'] as String? ?? 'Unknown',
-      imageUrl: json['imageUrl'] as String?,
-      status: json['status'] as String?,
-      number: json['number'] as int?,
-      birthDate: json['birthDate'] as String?,
+      imageUrl: json['imageUrl'] as String? ??
+          'https://avatars.dicebear.com/api/adventurer/random.svg',
+      status: json['status'] as String? ?? 'No stats',
+      number: json['number'] as int? ?? 63,
+      birthDate: json['birthDate'] as String? ?? 'dd/mm/yyyy',
     );
 
 Map<String, dynamic> _$$_AccountToJson(_$_Account instance) =>

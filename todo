@@ -1,0 +1,19 @@
+//Inherited Widget -DONE
+//StreamController -DONE
+//FutureBuilder -DONE
+//ValueNotifier -DONE
+
+//discuss some state managements
+
+
+//Project Structure/Architecture
+//Analogy Explanation
+
+
+
+//FIREBASE FLOW
+//Firebase Setup
+//signin anonymously
+//update accounts collection
+//update accounts subcollection public
+//listen to accounts collection

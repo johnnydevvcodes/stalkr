@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.stalkr">
+    package="com.moji.stalkr">
    <application
         android:label="stalkr"
         android:name="${applicationName}"

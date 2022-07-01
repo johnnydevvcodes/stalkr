@@ -145,10 +145,10 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 class _$_Account with DiagnosticableTreeMixin implements _Account {
   _$_Account(
       {this.name = 'Unknown',
-      this.imageUrl,
-      this.status,
-      this.number,
-      this.birthDate});
+      this.imageUrl = 'https://avatars.dicebear.com/api/adventurer/random.svg',
+      this.status = 'No stats',
+      this.number = 63,
+      this.birthDate = 'dd/mm/yyyy'});
 
   factory _$_Account.fromJson(Map<String, dynamic> json) =>
       _$$_AccountFromJson(json);
@@ -157,12 +157,16 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
   @JsonKey()
   final String name;
   @override
+  @JsonKey()
   final String? imageUrl;
   @override
+  @JsonKey()
   final String? status;
   @override
+  @JsonKey()
   final int? number;
   @override
+  @JsonKey()
   final String? birthDate;
 
   @override

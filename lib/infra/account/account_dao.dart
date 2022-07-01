@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:sembast/sembast.dart';
-import 'package:stalkr/models/account.dart';
-import 'package:stalkr/storage/app_db.dart';
+import 'package:stalkr/domain/account.dart';
+import 'package:stalkr/core/app_db.dart';
 
 class AccountDao {
   final _accountDbStore = StoreRef.main();

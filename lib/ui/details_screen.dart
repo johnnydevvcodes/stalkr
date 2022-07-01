@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stalkr/application/app_stream.dart';
 
-import '../models/account.dart';
+import '../domain/account.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});

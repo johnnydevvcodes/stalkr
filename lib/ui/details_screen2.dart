@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stalkr/application/app_stream.dart';
 
-import '../models/account.dart';
+import '../domain/account.dart';
 
 class DetailsScreen2 extends StatefulWidget {
   const DetailsScreen2({super.key});
@@ -14,6 +14,10 @@ class DetailsScreen2 extends StatefulWidget {
 }
 
 class _DetailsScreen2State extends State<DetailsScreen2> {
+  var _appStream = AppStream();
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +25,7 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
         title: const Text('Profile Page'),
       ),
       body: ValueListenableBuilder(
-        valueListenable: AppStream().accountNotifier,
+        valueListenable: _appStream.accountNotifier,
         builder: (context, Account? value, child) {
           var account = value ?? Account();
           return _buildContent(account);
@@ -61,10 +65,10 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
             enabled: false,
             initialValue: account.number.toString(),
           ),
-          TextFormField(
-            enabled: false,
-            initialValue: account.birthDate,
-          )
+          // TextFormField(
+          //   enabled: false,
+          //   initialValue: account.birthDate,
+          // )
         ],
       ),
     );
