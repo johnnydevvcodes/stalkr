@@ -73,4 +73,6 @@ class _DetailsScreen2State extends State<DetailsScreen2> {
       ),
     );
   }
+
+  
 }

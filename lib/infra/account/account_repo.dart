@@ -13,18 +13,33 @@ class AccountRepo extends IAccountRepo {
     return _accountDao.getSavedAccount();
   }
 
-  @override
+  /*  @override
   Stream getAccountDbChanges() {
     return _accountDao.getAccountDbChanges();
-  }
+  } */
+
+ 
 
   @override
-  Future saveAccount(Account account) {
-    return _accountDao.saveAccount(account);
+  Future<List<dynamic>> getAccounts() async {
+    return await _accountDao.getAccounts();
   }
 
   @override
   User? getUser() {
+    try {
+      final userCredential = FirebaseAuth.instance.signInAnonymously();
+      print("Signed in with temporary account.");
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("Unknown error.");
+      }
+    }
+
     return FirebaseAuth.instance.currentUser;
   }
 }

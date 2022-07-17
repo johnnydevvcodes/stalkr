@@ -8,7 +8,7 @@ part 'main_state.freezed.dart';
 class MainState with _$MainState {
   const factory MainState.onLoadState() = OnLoading;
 
-  const factory MainState.onAuthState(User? user) = onAuthentication;
+  const factory MainState.onAuthState(User? user)   = onAuthentication;
 
   const factory MainState.onLogoutState() = onLogout;
 

@@ -7,6 +7,8 @@ part 'account.g.dart';
 @freezed
 class Account with _$Account {
   factory Account({
+    
+    String? docRef,
     @Default('Unknown') String name,
     @Default('https://avatars.dicebear.com/api/adventurer/random.svg') String? imageUrl,
     @Default('No stats') String? status,

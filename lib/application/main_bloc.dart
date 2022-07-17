@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -20,6 +19,12 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   void _checkAuth() {
     var user = _accountRepo.getUser();
     this.add(MainEvent.onAuth(user));
+  }
+
+  void addLoadingEvent() {
+    add(MainEvent.onLoad());
+    emit(MainState.onLoadState());
+    // print("I GOT HERE BROSKI");
   }
 
   //listener

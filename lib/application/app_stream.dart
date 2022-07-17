@@ -26,22 +26,22 @@ class AppStream {
       outputController.sink.add(account);
     });
 
-    accountDao.getAccountDbChanges().listen((account) {
-      print("DB Changes: ${account}");
+  /*   accountDao.getAccountDbChanges().listen((account) {
+      //print("DB Changes: ${account}");
       inputController.sink.add(account);
       //
       accountNotifier.value = account;
       accountNotifier.notifyListeners();
-    });
+    }); */
   }
 
   Stream<Account> get valOutput => outputController.stream;
 
   StreamSink<Account> get valInput => inputController.sink;
 
-  Future<Account> saveAccount(Account account) {
-    return accountDao.saveAccount(account);
-  }
+  // Future<Account> saveAccount(Account account) {
+  //   return accountDao.saveAccount(account);
+  // }
 
   //future sample
   Future<Account> getAccountFuture() {

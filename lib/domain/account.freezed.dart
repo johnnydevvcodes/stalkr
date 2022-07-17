@@ -20,6 +20,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Account {
+  String? get docRef => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res>;
   $Res call(
-      {String name,
+      {String? docRef,
+      String name,
       String? imageUrl,
       String? status,
       int? number,
@@ -53,6 +55,7 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? docRef = freezed,
     Object? name = freezed,
     Object? imageUrl = freezed,
     Object? status = freezed,
@@ -60,6 +63,10 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
     Object? birthDate = freezed,
   }) {
     return _then(_value.copyWith(
+      docRef: docRef == freezed
+          ? _value.docRef
+          : docRef // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -91,7 +98,8 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
       __$$_AccountCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String name,
+      {String? docRef,
+      String name,
       String? imageUrl,
       String? status,
       int? number,
@@ -109,6 +117,7 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? docRef = freezed,
     Object? name = freezed,
     Object? imageUrl = freezed,
     Object? status = freezed,
@@ -116,6 +125,10 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
     Object? birthDate = freezed,
   }) {
     return _then(_$_Account(
+      docRef: docRef == freezed
+          ? _value.docRef
+          : docRef // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -144,7 +157,8 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Account with DiagnosticableTreeMixin implements _Account {
   _$_Account(
-      {this.name = 'Unknown',
+      {this.docRef,
+      this.name = 'Unknown',
       this.imageUrl = 'https://avatars.dicebear.com/api/adventurer/random.svg',
       this.status = 'No stats',
       this.number = 63,
@@ -153,6 +167,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
   factory _$_Account.fromJson(Map<String, dynamic> json) =>
       _$$_AccountFromJson(json);
 
+  @override
+  final String? docRef;
   @override
   @JsonKey()
   final String name;
@@ -171,7 +187,7 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Account(name: $name, imageUrl: $imageUrl, status: $status, number: $number, birthDate: $birthDate)';
+    return 'Account(docRef: $docRef, name: $name, imageUrl: $imageUrl, status: $status, number: $number, birthDate: $birthDate)';
   }
 
   @override
@@ -179,6 +195,7 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Account'))
+      ..add(DiagnosticsProperty('docRef', docRef))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('status', status))
@@ -191,6 +208,7 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Account &&
+            const DeepCollectionEquality().equals(other.docRef, docRef) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.status, status) &&
@@ -202,6 +220,7 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(docRef),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(imageUrl),
       const DeepCollectionEquality().hash(status),
@@ -221,7 +240,8 @@ class _$_Account with DiagnosticableTreeMixin implements _Account {
 
 abstract class _Account implements Account {
   factory _Account(
-      {final String name,
+      {final String? docRef,
+      final String name,
       final String? imageUrl,
       final String? status,
       final int? number,
@@ -229,6 +249,8 @@ abstract class _Account implements Account {
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$_Account.fromJson;
 
+  @override
+  String? get docRef => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override

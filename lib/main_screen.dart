@@ -3,19 +3,23 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:stalkr/ui/reusables/router.dart';
-import 'package:stalkr/ui/details_screen.dart';
+import 'package:stalkr/application/main_bloc.dart';
+import 'package:stalkr/core/di/service_locator.dart';
 import 'package:stalkr/ui/details_screen2.dart';
+
+import 'package:stalkr/ui/reusables/router.dart';
 // import 'package:stalkr/storage/prefs.dart';
 // import 'storage/user_details.dart';
 
-import '../application/app_stream.dart';
-import '../domain/account.dart';
+import 'application/app_stream.dart';
+import 'domain/account.dart';
+import 'domain/i_account_repo.dart';
 
 // ignore: must_be_immutable
 class MainScreen extends StatefulWidget {
@@ -38,6 +42,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final _birthDateCtrl = TextEditingController();
   late DateTime _birthdatePicker = DateTime.now();
   var _appStream = AppStream();
+  var _accountRepo = locator<IAccountRepo>();
+
   String? _imageLocalPath;
   String? get _statusOutput => _nameCtrl.text.isNotEmpty
       ? "${_nameCtrl.text}, ${_statusCtrl.text}"
@@ -60,50 +66,47 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    // _birthDateCtrl.text =
+    //     "${_birthdatePicker.month}/${_birthdatePicker.day}/${_birthdatePicker.year}";
+
+    // _appStream.valOutput.listen((event) {
+    //   _nameCtrl.text = event.name;
+    //   _statusCtrl.text = event.status ?? '';
+    //   _phoneNumberCtrl.text =
+    //       event.number.toString() == "null" ? "63" : event.number.toString();
+    //   _birthDateCtrl.text = event.birthDate ??
+    //       "${_birthdatePicker.month}/${_birthdatePicker.day}/${_birthdatePicker.year}";
+    // });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Stalkr"),
       ),
       body: StreamBuilder(
-        initialData: Account(),
         stream: _appStream.valOutput,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            case ConnectionState.active:
-            case ConnectionState.done:
-              if (snapshot.data != null) {
-                Account account = snapshot.data ?? Account();
-                _nameCtrl.text = account.name;
-                _statusCtrl.text = account.status ?? 'No stats';
-                _phoneNumberCtrl.text = account.number.toString();
-                _birthDateCtrl.text = account.birthDate ?? "11/15";
-                return SingleChildScrollView(child: _buildContent(account));
-              } else {
-                return Container();
-              }
+          if (snapshot.data == null &&
+              snapshot.connectionState != ConnectionState.done) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            Account account = snapshot.data ?? Account();
+            _nameCtrl.text = account.name;
+            _statusCtrl.text = account.status ?? 'No stats';
+            _phoneNumberCtrl.text = account.number.toString();
+            _birthDateCtrl.text = account.birthDate!;
+            return SingleChildScrollView(child: _buildContent(account));
           }
-          // if (snapshot.data == null &&
-          //     snapshot.connectionState != ConnectionState.done) {
-          //   return Center(child: CircularProgressIndicator());
-          // } else {
-          //   Account account = snapshot.data ?? Account();
-          //   _nameCtrl.text = account.name;
-          //   _statusCtrl.text = account.status ?? 'No stats';
-          //   _phoneNumberCtrl.text = account.number.toString();
-          //   _birthDateCtrl.text = account.birthDate!;
-          //   return SingleChildScrollView(child: _buildContent(account));
-          // }
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await _save();
-          // context.toScreen(DetailsScreen());
-          context.toScreen(DetailsScreen());
+        onPressed: () {
+          _save();
         },
         child: Icon(Icons.save),
       ),
@@ -145,13 +148,18 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       String url =
           "https://avatars.dicebear.com/api/adventurer/${_nameCtrl.text}.svg";
 
-      await _appStream.saveAccount(Account(
+      /*      await _appStream.saveAccount(Account(
         name: _nameCtrl.text,
         imageUrl: url,
         status: _statusCtrl.text,
         number: int.parse(_phoneNumberCtrl.text),
         birthDate: _birthDateCtrl.text,
-      ));
+      )); */
+
+
+
+      // context.toScreen(DetailsScreen());
+      //context.toScreen(DetailsScreen2());
     }
   }
 
@@ -213,26 +221,26 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               }
             },
           ),
-          // TextFormField(
-          //     textInputAction: TextInputAction.done,
-          //     controller: _birthDateCtrl,
-          //     decoration: InputDecoration(labelText: "Birthdate"),
-          //     onFieldSubmitted: (String fieldValue) {
-          //       _save();
-          //     },
-          //     onTap: () async {
-          //       DateTime? newDate = await showDatePicker(
-          //           context: context,
-          //           initialDate: _birthdatePicker,
-          //           firstDate: DateTime(1990),
-          //           lastDate: DateTime.now());
-          //       if (newDate == null)
-          //         return;
-          //       else {
-          //         _birthDateCtrl.text =
-          //             "${newDate.month}/${newDate.day}/${newDate.year}";
-          //       }
-          //     }),
+          TextFormField(
+              textInputAction: TextInputAction.done,
+              controller: _birthDateCtrl,
+              decoration: InputDecoration(labelText: "Birthdate"),
+              onFieldSubmitted: (String fieldValue) {
+                _save();
+              },
+              onTap: () async {
+                DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: _birthdatePicker,
+                    firstDate: DateTime(1990),
+                    lastDate: DateTime.now());
+                if (newDate == null)
+                  return;
+                else {
+                  _birthDateCtrl.text =
+                      "${newDate.month}/${newDate.day}/${newDate.year}";
+                }
+              }),
         ],
       ),
     );
